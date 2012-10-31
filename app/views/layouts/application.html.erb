@@ -19,12 +19,29 @@
        <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, :id => "flash_#{name}" %>
       <% end %>
+
       <%= content_tag :h1, yield(:title) if show_title? %>
+
       <%= yield %>
     </div><!-- /container -->
 
+      <div class="container">
+        <p class="muted credit">
+          Choose your language: 
+          <%= link_to "English", 
+            :controller => controller.controller_name, 
+            :action => controller.action_name, :locale => "en" %>
+            |
+          <%= link_to "繁體中文", 
+            :controller => controller.controller_name, 
+            :action => controller.action_name, :locale => "zh_tw" %>
+        </p>
+      </div>
+    
+    <br/>
+
     <footer>
-     <%= debug(params) if Rails.env.development? %>        
+     <%= debug(params) if Rails.env.development? %>
     </footer>
   </body>
 </html>

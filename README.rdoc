@@ -37,3 +37,29 @@ $ rails g controller home index
 6. create posts
 $ rails g nifty:scaffold post title:string user_id:integer comment:text type:string content:text
 $ rake db:migrate
+
+7. generate devise view
+$ rails g devise:views users
+
+8. Rails internationalization (I18n)
+  a. create en.yml and zh_tw.yml in /config/locales/ folder with all of labels
+  b. Add:
+  before_filter :set_locale in controllers/application_controller.rb
+  
+  def set_locale
+    if params[:locale] && ["en", "zh_tw"].include?(params[:locale])
+      session[:locale] = params[:locale]
+    end
+    I18n.locale = session[:locale] || I18n.default_locale
+  end
+
+
+9. Error exception handling
+  Add following code to /controllers/application_controller.rb
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
+
+  def render_not_found
+    render template: 'shared/404', :status => :not_found
+  end
+
+#git commit  
